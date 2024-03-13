@@ -49,6 +49,7 @@ mod tests {
             target: "PLN".to_string(),
             amount: 10.0,
             list: false,
+            interactive: false,
         };
 
         let result = process_api_response(api_url, &cli_data);
