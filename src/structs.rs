@@ -4,7 +4,7 @@ use rustcurr::cli;
 pub struct App {
     /// User data from CLI it holds base currency, target currency and amount
     pub user_data: cli::CliHandler,
-    
+
     /// API url for ExchangeRate Api
     pub api_url: String,
 }

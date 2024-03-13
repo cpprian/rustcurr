@@ -12,33 +12,27 @@ pub fn process_api_response(
 
     let client = reqwest::blocking::Client::new();
     let response = client
-        .get(&url)
+        .get(url)
         .header(AUTHORIZATION, "Bearer 12345")
         .header(CONTENT_TYPE, "application/json")
         .header(ACCEPT, "application/json")
         .send()
-        .map_err(
-            |error| ApiErrorResponse {
-                result: "error".to_string(),
-                error_type: error.to_string(),
-            },
-        )?;
+        .map_err(|error| ApiErrorResponse {
+            result: "error".to_string(),
+            error_type: error.to_string(),
+        })?;
 
     if response.status().is_success() {
-        let data = response.json().map_err(
-            |error| ApiErrorResponse {
-                result: "error".to_string(),
-                error_type: error.to_string(),
-            },
-        )?;
+        let data = response.json().map_err(|error| ApiErrorResponse {
+            result: "error".to_string(),
+            error_type: error.to_string(),
+        })?;
         Ok(data)
     } else {
-        let error = response.json().map_err(
-            |error| ApiErrorResponse {
-                result: "error".to_string(),
-                error_type: error.to_string(),
-            },
-        )?;
+        let error = response.json().map_err(|error| ApiErrorResponse {
+            result: "error".to_string(),
+            error_type: error.to_string(),
+        })?;
         Err(error)
     }
 }

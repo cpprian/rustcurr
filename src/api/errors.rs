@@ -1,5 +1,5 @@
-use std::{error::Error, fmt::Display};
 use serde::{Deserialize, Serialize};
+use std::{error::Error, fmt::Display};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct ApiErrorResponse {

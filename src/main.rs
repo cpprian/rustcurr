@@ -1,6 +1,6 @@
 use anyhow::{Context, Result};
-use rustcurr::api;
 use api::process;
+use rustcurr::api;
 
 mod setup;
 mod structs;
