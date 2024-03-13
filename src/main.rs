@@ -18,8 +18,8 @@ fn run() -> Result<()> {
     // convert logic
     let conversion = converter::process_conversion(
         response,
-        app.user_data.base,
-        app.user_data.target,
+        app.user_data.base.as_str(),
+        app.user_data.target.as_str(),
         app.user_data.amount,
     )?;
 

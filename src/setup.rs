@@ -5,7 +5,7 @@ use std::io;
 use crate::structs::App;
 
 /// Setup the application by processing the config and CLI data from the user
-pub fn setup_app<'a>() -> Result<App<'a>, Error> {
+pub fn setup_app() -> Result<App, Error> {
     let config = config::process_config_data(&mut io::stdout().lock())?;
     let user_data = cli::process_cli_data()?;
     let app = App {

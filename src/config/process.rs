@@ -15,8 +15,7 @@ use super::structs::ConfigData;
 pub fn process_config_data(writer: &mut impl std::io::Write) -> Result<ConfigData> {
     dotenv().context("Failed to read .env file")?;
     let config = load_config_data()?;
-    // TODO: change to log
-    writeln!(writer, "API_KEY: {}", config.api_key).unwrap();
+    // TODO: message to output for a user
     Ok(config)
 }
 
