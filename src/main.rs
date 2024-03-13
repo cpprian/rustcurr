@@ -1,13 +1,21 @@
 use anyhow::{Context, Result};
-use std::io::{self, Write};
+use api::process;
+use rustcurr::api;
 
-mod config;
+mod setup;
+mod structs;
 
 fn main() -> Result<()> {
-    let stdout = io::stdout();
-    let mut writer = stdout.lock();
-    let config = config::process_config_data(&mut writer)?;
+    run().context("Error running the app")?;
+    Ok(())
+}
 
-    writeln!(writer, "API_KEY: {}", config.api_key).context("Failed to write to stdout")?;
+fn run() -> Result<()> {
+    let app = setup::setup_app().context("Error setting up the app")?;
+    let response = process::process_api_response(app.api_url, app.user_data)?;
+    println!("{}", response);
+
+    // convert logic
+
     Ok(())
 }
