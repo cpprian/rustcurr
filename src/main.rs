@@ -1,22 +1,13 @@
-use clap::Parser;
+use anyhow::{Context, Result};
+use std::io::{self, Write};
 
-/// Simple program to greet a person
-#[derive(Parser, Debug)]
-#[command(version, about, long_about = None)]
-struct Args {
-    /// Name of the person to greet
-    #[arg(short, long)]
-    name: String,
+mod config;
 
-    /// Number of times to greeet
-    #[arg(short, long, default_value_t = 1)]
-    count: u8,
-}
+fn main() -> Result<()> {
+    let stdout = io::stdout();
+    let mut writer = stdout.lock();
+    let config = config::process_config_data(&mut writer)?;
 
-fn main() {
-    let args = Args::parse();
-
-    for _ in 0..args.count {
-        println!("Hello {}!", args.name);
-    }
+    writeln!(writer, "API_KEY: {}", config.api_key).context("Failed to write to stdout")?;
+    Ok(())
 }
