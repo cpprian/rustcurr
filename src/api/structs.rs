@@ -1,32 +1,90 @@
-pub struct ApiHandler<'a> {
-    pub name: &'a str,
-    pub number: u32,
+use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
+use std::fmt::{self, Display, Formatter};
+
+/// Struct to hold the response from the ExchangeRate API
+#[derive(Debug, Serialize, Deserialize)]
+pub struct ApiResponse {
+    /// Result of the API call, should be "success" or "error"
+    pub result: String,
+
+    /// Link to the ExchangeRate API documentation
+    pub documentation: String,
+
+    /// Terms of use for the ExchangeRate API
+    pub term_of_use: String,
+
+    /// Time of the last update in Unix time
+    pub time_last_update_unix: u64,
+
+    /// Time of the last update in UTC time
+    pub time_last_update_utc: String,
+
+    /// Time of the next update in Unix time
+    pub time_next_update_unix: u64,
+
+    /// Time of the next update in UTC time
+    pub time_next_update_utc: String,
+
+    /// Base currency code from user input
+    pub base_code: String,
+
+    /// Conversion rates from the base currency to other currencies
+    pub conversion_rates: HashMap<String, f64>,
 }
 
-impl<'a> ApiHandler<'a> {
-    pub fn new(&self) {
-        println!("setup logic from ApiHandler");
+impl ApiResponse {
+    /// Create a new ApiResponse with default values
+    pub fn new() -> ApiResponse {
+        ApiResponse {
+            result: String::new(),
+            documentation: String::new(),
+            term_of_use: String::new(),
+            time_last_update_unix: 0,
+            time_last_update_utc: String::new(),
+            time_next_update_unix: 0,
+            time_next_update_utc: String::new(),
+            base_code: String::new(),
+            conversion_rates: HashMap::new(),
+        }
     }
+}
 
-    pub fn default(&mut self) {
-        self.name = "Hello";
-        self.number = 10;
+impl Default for ApiResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl Display for ApiResponse {
+    fn fmt(&self, f: &mut Formatter) -> fmt::Result {
+        write!(f, "Result: {}\n", self.result)?;
+        write!(f, "Documentation: {}\n", self.documentation)?;
+        write!(f, "Term of Use: {}\n", self.term_of_use)?;
+        write!(f, "Time Last Update (Unix): {}\n", self.time_last_update_unix)?;
+        write!(f, "Time Last Update (UTC): {}\n", self.time_last_update_utc)?;
+        write!(f, "Time Next Update (Unix): {}\n", self.time_next_update_unix)?;
+        write!(f, "Time Next Update (UTC): {}\n", self.time_next_update_utc)?;
+        write!(f, "Base Code: {}\n", self.base_code)?;
+        write!(f, "Conversion Rates: {:?}", self.conversion_rates)
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use super::ApiHandler;
+    use super::*;
 
     #[test]
-    fn quick_test() {
-        let mut api = ApiHandler {
-            name: "World",
-            number: 5,
-        };
-
-        api.default();
-        assert_eq!("Hello", api.name);
-        assert_eq!(10, api.number);
+    fn test_new() {
+        let response = ApiResponse::new();
+        assert_eq!(response.result, "");
+        assert_eq!(response.documentation, "");
+        assert_eq!(response.term_of_use, "");
+        assert_eq!(response.time_last_update_unix, 0);
+        assert_eq!(response.time_last_update_utc, "");
+        assert_eq!(response.time_next_update_unix, 0);
+        assert_eq!(response.time_next_update_utc, "");
+        assert_eq!(response.base_code, "");
+        assert_eq!(response.conversion_rates.len(), 0);
     }
 }
