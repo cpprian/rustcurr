@@ -15,3 +15,15 @@ impl ConfigData {
         ConfigData { api_key }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_new() {
+        let api = "api_key".to_string();
+        let config = ConfigData::new(api.clone());
+        assert_eq!(config.api_key, api);
+    }
+}

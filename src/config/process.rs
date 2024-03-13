@@ -29,3 +29,23 @@ fn load_config_data() -> Result<ConfigData> {
     let config = std::env::var("API_KEY").with_context(|| "API_KEY not found in config file")?;
     Ok(ConfigData::new(config))
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_load_config_data() {
+        std::env::set_var("API_KEY", "api_key");
+        let config = load_config_data().unwrap();
+        assert_eq!(config.api_key, "api_key");
+    }
+
+    #[test]
+    fn test_process_config_data() {
+        std::env::set_var("API_KEY", "api_key");
+        let mut writer = Vec::new();
+        let config = process_config_data(&mut writer).unwrap();
+        assert_eq!(config.api_key, "api_key");
+    }
+}
