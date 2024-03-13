@@ -45,8 +45,8 @@ mod tests {
     fn test_process_api_response() {
         let api_url = "https://v6.exchangerate-api.com/v6/52bb87e27d6b905c2d0ee092".to_string();
         let cli_data = CliHandler {
-            base: "Hello",
-            target: "PLN",
+            base: "Hello".to_string(),
+            target: "PLN".to_string(),
             amount: 10.0,
         };
 
