@@ -16,6 +16,7 @@ pub fn process_config_data(writer: &mut impl std::io::Write) -> Result<ConfigDat
     dotenv().context("Failed to read .env file")?;
     let config = load_config_data()?;
     // TODO: message to output for a user
+    writeln!(writer, "Config data loaded successfully")?;
     Ok(config)
 }
 

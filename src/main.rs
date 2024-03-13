@@ -1,6 +1,9 @@
 use anyhow::{Context, Result};
 use api::process;
-use rustcurr::{api, converter};
+use rustcurr::{
+    api,
+    converter::{self, structs::CurrencyConversion},
+};
 
 mod setup;
 mod structs;
@@ -24,7 +27,13 @@ fn run() -> Result<()> {
     )?;
 
     // print result
-    println!("{}", conversion);
+    print_result(conversion, &mut std::io::stdout())?;
 
+    Ok(())
+}
+
+fn print_result(conversion: CurrencyConversion, writer: &mut impl std::io::Write) -> Result<()> {
+    writeln!(writer, "\n----- Conversion Result -----")?;
+    writeln!(writer, "{}", conversion)?;
     Ok(())
 }
