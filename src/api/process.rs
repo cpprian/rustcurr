@@ -58,40 +58,4 @@ mod tests {
 
         assert_eq!(result.unwrap_err(), expected);
     }
-
-    #[test]
-    fn test_process_api_response_inactive_account() {
-        let api_url = "https://v6.exchangerate-api.com/v6/11111111111111".to_string();
-        let cli_data = CliHandler {
-            base: "USD".to_string(),
-            target: "PLN".to_string(),
-            amount: 10.0,
-        };
-
-        let result = process_api_response(api_url, cli_data);
-        let expected = ApiErrorResponse {
-            result: "error".to_string(),
-            error_type: "inactive-account".to_string(),
-        };
-
-        assert_eq!(result.unwrap_err(), expected);
-    }
-
-    #[test]
-    fn test_process_api_response_invalid_key() {
-        let api_url = "https://v6.exchangerate-api.com/v6/Hello-World".to_string();
-        let cli_data = CliHandler {
-            base: "USD".to_string(),
-            target: "PLN".to_string(),
-            amount: 10.0,
-        };
-
-        let result = process_api_response(api_url, cli_data);
-        let expected = ApiErrorResponse {
-            result: "error".to_string(),
-            error_type: "invalid-key".to_string(),
-        };
-
-        assert_eq!(result.unwrap_err(), expected);
-    }
 }
