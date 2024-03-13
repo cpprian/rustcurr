@@ -61,7 +61,7 @@ jobs:
                 cargo clean
             fi
 
-            cargo buil --all --release
+            cargo build --all --release
             cp "target/release/rustcurr${binary_extension}" "${binary_path}"
             strip "${binary_path}"
 
