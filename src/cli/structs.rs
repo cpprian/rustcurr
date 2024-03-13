@@ -15,4 +15,9 @@ pub struct CliHandler {
     /// Amount to convert
     #[clap(short, long, default_value = "10.0")]
     pub amount: f64,
+
+    /// List all available currencies and their current exchange rates
+    /// If this flag is set, only base argument is used
+    #[clap(short, long, default_value = "false")]
+    pub list: bool,
 }
