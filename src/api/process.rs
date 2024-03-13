@@ -58,4 +58,6 @@ mod tests {
 
         assert_eq!(result.unwrap_err(), expected);
     }
+
+    // TODO: add test cases: invalid-key, invalid-account, quota-reached
 }

@@ -61,17 +61,9 @@ impl Display for ApiResponse {
         writeln!(f, "Result: {}", self.result)?;
         writeln!(f, "Documentation: {}", self.documentation)?;
         writeln!(f, "Term of Use: {}", self.terms_of_use)?;
-        writeln!(
-            f,
-            "Time Last Update (Unix): {}",
-            self.time_last_update_unix
-        )?;
+        writeln!(f, "Time Last Update (Unix): {}", self.time_last_update_unix)?;
         writeln!(f, "Time Last Update (UTC): {}", self.time_last_update_utc)?;
-        writeln!(
-            f,
-            "Time Next Update (Unix): {}",
-            self.time_next_update_unix
-        )?;
+        writeln!(f, "Time Next Update (Unix): {}", self.time_next_update_unix)?;
         writeln!(f, "Time Next Update (UTC): {}", self.time_next_update_utc)?;
         writeln!(f, "Base Code: {}", self.base_code)?;
         writeln!(f, "Conversion Rates: {:?}", self.conversion_rates)
