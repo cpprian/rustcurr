@@ -19,6 +19,10 @@ fn run() -> Result<()> {
     let response = process::process_api_response(app.api_url, &app.user_data)?;
 
     // convert logic
+    if app.user_data.list {
+        print_list_of_currencies(response);
+        return Ok(());
+    }
     let conversion = converter::process_conversion(
         response,
         app.user_data.base.as_str(),
@@ -27,13 +31,22 @@ fn run() -> Result<()> {
     )?;
 
     // print result
-    print_result(conversion, &mut std::io::stdout())?;
+    print_result_conversion(conversion, &mut std::io::stdout())?;
 
     Ok(())
 }
 
-fn print_result(conversion: CurrencyConversion, writer: &mut impl std::io::Write) -> Result<()> {
+fn print_result_conversion(
+    conversion: CurrencyConversion,
+    writer: &mut impl std::io::Write,
+) -> Result<()> {
     writeln!(writer, "\n----- Conversion Result -----")?;
     writeln!(writer, "{}", conversion)?;
     Ok(())
+}
+
+fn print_list_of_currencies(response: api::structs::ApiResponse) {
+    for (key, value) in response.conversion_rates.iter() {
+        println!("{}: {}", key, value);
+    }
 }

@@ -48,6 +48,7 @@ mod tests {
             base: "Hello".to_string(),
             target: "PLN".to_string(),
             amount: 10.0,
+            list: false,
         };
 
         let result = process_api_response(api_url, &cli_data);
