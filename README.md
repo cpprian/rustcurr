@@ -12,7 +12,10 @@ A command-line tool written in Rust to converts user amounts between different c
 5. Run `./rustcurr --help` to see the available commands
 
 ## Usage
-
+1. Run `./rustcurr -b <from_currency> -t <from_currency> -a <amount>` to convert an amount from one currency to another
+2. Run `./rustcurr -b <from_currency> --list` to list all available currencies and their exchange rates from your specified base currency
+3. Run `./rustcurr -i` to run the interactive mode
+4. Run `./rustcurr --help` to see the available commands
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
