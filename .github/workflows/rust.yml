@@ -1,0 +1,96 @@
+# Resource: https://github.com/metaplex-foundation/sugar/blob/main/.github/workflows/build.yml
+name: Rust
+
+on: [push]
+
+env:
+  PROJECT_NAME: rustcurr
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os:
+            - windows-latest
+            - ubuntu-latest
+            - macos-latest
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+        - name: Checkout
+          uses: actions/checkout@v3
+
+        - name: Install libudev-dev on Ubuntu
+          if: runner.os == 'Linux'
+          run: |
+            sudo apt-get update
+            sudo apt-get install libudev-dev
+
+        - name: Install Latest Rust
+          uses: actions-rs/toolchain@v1
+          with: 
+            toolchain: stable
+            default: true
+            override: true
+
+        - name: Install rustfmt, and clippy
+          run: |
+            rustup component add rustfmt clippy
+
+        - name: Build
+          id: build
+          shell: bash
+          run: |
+            binary_extension=""
+            if [[ "${RUNNER_OS}" == "Windows" ]]; then
+                binary_extension=".exe"
+                binary_path="rustcurr-windows-latest${binary_extension}"
+            elif [[ "${RUNNER_OS}" == "macOS" ]]; then
+                binary_path="rustcurr-macos-intel-latest"
+            elif [[ "${RUNNER_OS}" == "Linux" ]]; then
+                binary_path="rustcurr-ubuntu-latest"
+            else
+                echo "error: unkown OS: ${RUNNER_OS}"
+                exit 1
+            fi
+            echo "::set-output name=binary_path::${binary_path}"
+
+            # clean build for release
+            if [[ "${GITHUB_REF}" = refs/tags/* ]]; then
+                cargo clean
+            fi
+
+            cargo build --all --release
+            cp "target/release/rustcurr${binary_extension}" "${binary_path}"
+            strip "${binary_path}"
+
+        - name: Test
+          uses: actions-rs/cargo@v1
+          with: 
+            command: test
+
+        - name: Rustfmt
+          uses: actions-rs/cargo@v1
+          with: 
+            command: fmt
+            args: --all -- --check
+
+        - name: Clippy
+          uses: actions-rs/cargo@v1
+          with: 
+            command: clippy
+            args: -- -D warnings
+
+        - name: Publish Artifacts
+          uses: actions/upload-artifact@v3
+          if: "!startsWith(github.ref, 'refs/tags/')"
+          with:
+              name: ${{ matrix.os }}
+              path: ${{ steps.build.outputs.binary_path }}
+    
+        - name: Release Tags
+          uses: softprops/action-gh-release@v1
+          if: startsWith(github.ref, 'refs/tags/')
+          with:
+              files: ${{ steps.build.outputs.binary_path }}
