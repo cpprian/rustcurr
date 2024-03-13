@@ -73,4 +73,30 @@ fn get_conversion_rate(
     Ok(conversion_rate)
 }
 
-// TODO: Add tests
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_process_conversion() {
+        let mut response = ApiResponse::new();
+        response.base_code = "USD".to_string();
+        response.conversion_rates.insert("EUR".to_string(), 0.85);
+        response.conversion_rates.insert("GBP".to_string(), 0.75);
+
+        let conversion = process_conversion(response, "USD", "EUR", 100.0).unwrap();
+        assert_eq!(conversion.result, 85.0);
+    }
+
+    #[test]
+    fn test_get_conversion_rate() {
+        let mut response = ApiResponse::new();
+        response.base_code = "USD".to_string();
+        response.conversion_rates.insert("EUR".to_string(), 0.85);
+        response.conversion_rates.insert("GBP".to_string(), 0.75);
+
+        let conversion = CurrencyConversion::new("USD", "EUR", 100.0);
+        let rate = get_conversion_rate(response, &conversion).unwrap();
+        assert_eq!(rate, 0.85);
+    }
+}
