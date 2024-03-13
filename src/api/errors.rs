@@ -1,3 +1,1 @@
-pub enum ApiError {
-
-}
+pub enum ApiError {}

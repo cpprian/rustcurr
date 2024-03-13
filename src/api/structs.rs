@@ -20,7 +20,7 @@ mod tests {
 
     #[test]
     fn quick_test() {
-        let mut api = ApiHandler{
+        let mut api = ApiHandler {
             name: "World",
             number: 5,
         };
