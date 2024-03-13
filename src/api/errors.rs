@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Serialize, Deserialize)]
 pub struct ApiErrorResponse {
     pub result: String,
+    #[serde(rename = "error-type")]
     pub error_type: String,
 }
 
@@ -24,9 +25,8 @@ impl From<reqwest::Error> for ApiErrorResponse {
     }
 }
 
-// the trait bound `ApiErrorResponse: std::error::Error` is not satisfied
-// the following other types implement trait `FromResidual<R>`:
-// <Result<T, F> as FromResidual<Yeet<E>>>
-// <Result<T, F> as FromResidual<Result<Infallible, E>>>
-// required for `anyhow::Error` to implement `From<ApiErrorResponse>`
-// required for `Result<(), anyhow::Error>` to implement `FromResidual<Result<Infallible, ApiErrorResponse>>`
+impl PartialEq for ApiErrorResponse {
+    fn eq(&self, other: &Self) -> bool {
+        self.result == other.result && self.error_type == other.error_type
+    }
+}

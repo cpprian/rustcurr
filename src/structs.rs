@@ -1,4 +1,4 @@
-use rustcurr::{cli::structs as cli, config::structs as config};
+use rustcurr::cli;
 
 /// Core application struct that holds all the data from user and API url for ExchangeRate Api communication
 pub struct App {
