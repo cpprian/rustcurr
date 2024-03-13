@@ -81,16 +81,16 @@ jobs:
           with: 
             command: clippy
             args: -- -D warnings
-            
+
         - name: Publish Artifacts
           uses: actions/upload-artifact@v3
-          if: !startsWith(github.ref, 'refs/tags/')
+          if: "!startsWith(github.ref, 'refs/tags/')"
           with:
-            name: ${{ matrix.os }}
-            path: ${{ steps.build.outputs.binary_path }}
-
+              name: ${{ matrix.os }}
+              path: ${{ steps.build.outputs.binary_path }}
+    
         - name: Release Tags
           uses: softprops/action-gh-release@v1
-          if: startsWith(github.ref, 'refs/tags')
+          if: startsWith(github.ref, 'refs/tags/')
           with:
-            files: ${{ steps.build.output.binary_path }}
+              files: ${{ steps.build.outputs.binary_path }}
