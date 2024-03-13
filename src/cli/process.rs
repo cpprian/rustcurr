@@ -16,7 +16,9 @@ pub fn process_cli_data(writer: &mut impl std::io::Write) -> Result<CliHandler, 
     Ok(cli)
 }
 
-pub fn process_interactive_mode(writer: &mut impl std::io::Write) -> Result<CliHandler, anyhow::Error> {
+pub fn process_interactive_mode(
+    writer: &mut impl std::io::Write,
+) -> Result<CliHandler, anyhow::Error> {
     writeln!(writer, "\n---- Interactive mode ----")?;
 
     let base_currency = prompt(writer, "Enter the base currency (e.g., USD): ")?;

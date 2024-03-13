@@ -1,4 +1,3 @@
-
 pub fn prompt(writer: &mut impl std::io::Write, message: &str) -> Result<String, anyhow::Error> {
     write!(writer, "{}", message)?;
     writer.flush()?;
