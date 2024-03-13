@@ -12,8 +12,8 @@ fn main() -> Result<()> {
 
 fn run() -> Result<()> {
     let app = setup::setup_app().context("Error setting up the app")?;
-    // let response = process::process_api_response(app.api_url, app.user_data)?;
-    // println!("{}", response);
+    let response = process::process_api_response(app.api_url, app.user_data)?;
+    println!("{}", response);
 
     // convert logic
 

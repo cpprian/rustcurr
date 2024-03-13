@@ -1,3 +1,5 @@
+use reqwest::header::{ACCEPT, AUTHORIZATION, CONTENT_TYPE};
+
 use crate::cli::CliHandler;
 
 use super::{errors::ApiErrorResponse, structs::ApiResponse};
@@ -6,18 +8,16 @@ pub fn process_api_response(
     api_url: String,
     cli_data: CliHandler,
 ) -> Result<ApiResponse, ApiErrorResponse> {
-    let url = format!("{}{}&symbols={}", api_url, cli_data.base, cli_data.target);
-    let response = reqwest::blocking::get(url)
-        .unwrap()
-        .json::<ApiResponse>()
-        .unwrap_or_else(|error| {
-            let error_message = format!("Error: {}", error);
-            let api_error_response = ApiErrorResponse {
-                result: "error".to_string(),
-                error_type: error_message,
-            };
-            panic!("{:?}", api_error_response);
-        });
+    let url = format!("{}/latest/{}", api_url, cli_data.base);
 
-    Ok(response)
+    let client = reqwest::blocking::Client::new();
+    let response = client
+        .get(&url)
+        .header(AUTHORIZATION, "Bearer 12345")
+        .header(CONTENT_TYPE, "application/json")
+        .header(ACCEPT, "application/json")
+        .send()
+        .map_err(ApiErrorResponse::from)?;
+
+    response.json().map_err(ApiErrorResponse::from)
 }

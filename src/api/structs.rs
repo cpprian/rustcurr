@@ -12,7 +12,7 @@ pub struct ApiResponse {
     pub documentation: String,
 
     /// Terms of use for the ExchangeRate API
-    pub term_of_use: String,
+    pub terms_of_use: String,
 
     /// Time of the last update in Unix time
     pub time_last_update_unix: u64,
@@ -39,7 +39,7 @@ impl ApiResponse {
         ApiResponse {
             result: String::new(),
             documentation: String::new(),
-            term_of_use: String::new(),
+            terms_of_use: String::new(),
             time_last_update_unix: 0,
             time_last_update_utc: String::new(),
             time_next_update_unix: 0,
@@ -60,7 +60,7 @@ impl Display for ApiResponse {
     fn fmt(&self, f: &mut Formatter) -> fmt::Result {
         write!(f, "Result: {}\n", self.result)?;
         write!(f, "Documentation: {}\n", self.documentation)?;
-        write!(f, "Term of Use: {}\n", self.term_of_use)?;
+        write!(f, "Term of Use: {}\n", self.terms_of_use)?;
         write!(f, "Time Last Update (Unix): {}\n", self.time_last_update_unix)?;
         write!(f, "Time Last Update (UTC): {}\n", self.time_last_update_utc)?;
         write!(f, "Time Next Update (Unix): {}\n", self.time_next_update_unix)?;
@@ -79,7 +79,7 @@ mod tests {
         let response = ApiResponse::new();
         assert_eq!(response.result, "");
         assert_eq!(response.documentation, "");
-        assert_eq!(response.term_of_use, "");
+        assert_eq!(response.terms_of_use, "");
         assert_eq!(response.time_last_update_unix, 0);
         assert_eq!(response.time_last_update_utc, "");
         assert_eq!(response.time_next_update_unix, 0);
