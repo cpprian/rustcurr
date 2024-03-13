@@ -1,9 +1,9 @@
 pub use crate::cli::structs::CliHandler;
 
-pub fn process_cli_data() -> Result<CliHandler, anyhow::Error> {
+pub fn process_cli_data<'a>() -> Result<CliHandler<'a>, anyhow::Error> {
     let data = CliHandler {
-        base: "USD".to_string(),
-        target: "PLN".to_string(),
+        base: "USD",
+        target: "PLN",
         amount: 10.0,
     };
 

@@ -1,9 +1,9 @@
 use rustcurr::cli;
 
 /// Core application struct that holds all the data from user and API url for ExchangeRate Api communication
-pub struct App {
+pub struct App<'a> {
     /// User data from CLI it holds base currency, target currency and amount
-    pub user_data: cli::CliHandler,
+    pub user_data: cli::CliHandler<'a>,
 
     /// API url for ExchangeRate Api
     pub api_url: String,

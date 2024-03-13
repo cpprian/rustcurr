@@ -1,10 +1,11 @@
 /// Struct to hold the CLI arguments
-pub struct CliHandler {
+#[derive(Clone, Debug)]
+pub struct CliHandler<'a> {
     /// Base currency code
-    pub base: String,
+    pub base: &'a str,
 
     /// Target currency code
-    pub target: String,
+    pub target: &'a str,
 
     /// Amount to convert
     pub amount: f64,
