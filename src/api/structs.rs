@@ -51,12 +51,14 @@ impl ApiResponse {
 }
 
 impl Default for ApiResponse {
+    /// Create a new ApiResponse with default values
     fn default() -> Self {
         Self::new()
     }
 }
 
 impl Display for ApiResponse {
+    /// Implement the Display trait for ApiResponse
     fn fmt(&self, f: &mut Formatter) -> fmt::Result {
         writeln!(f, "Result: {}", self.result)?;
         writeln!(f, "Documentation: {}", self.documentation)?;
