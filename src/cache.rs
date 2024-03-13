@@ -21,10 +21,7 @@ pub fn load_cache(
     Ok(cache_item)
 }
 
-pub fn save_cache(
-    cache_item: &CacheItem,
-    cache_file_path: &str
-) -> Result<(), Error> {
+pub fn save_cache(cache_item: &CacheItem, cache_file_path: &str) -> Result<(), Error> {
     let cache_file_path = Path::new(cache_file_path);
     let file = std::fs::File::create(cache_file_path)?;
     let bufwriter = std::io::BufWriter::new(file);

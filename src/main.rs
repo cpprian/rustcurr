@@ -1,12 +1,12 @@
 use anyhow::{Context, Result};
 use api::process;
+use api::structs::ApiResponse;
 use cache::save_cache;
 use rustcurr::{
     api,
     converter::{self, structs::CurrencyConversion},
 };
 use std::io::Write;
-use api::structs::ApiResponse;
 
 mod cache;
 mod setup;
@@ -23,7 +23,7 @@ fn run() -> Result<()> {
     let app = setup::setup_app().context("Error setting up the app")?;
 
     // load cache from a file
-    let mut cache_item = cache::load_cache(&app.cache_file_path.as_str(), &mut writer)?;
+    let mut cache_item = cache::load_cache(app.cache_file_path.as_str(), &mut writer)?;
     if cache_item.base == app.user_data.base {
         writeln!(writer, "Using cache")?;
     } else {
@@ -69,6 +69,5 @@ fn print_list_of_currencies(response: ApiResponse, writer: &mut impl std::io::Wr
     for (key, value) in response.conversion_rates.iter() {
         writeln!(writer, "{}: {}", key, value)?;
     }
-    writeln!(writer, "")?;
     Ok(())
 }
