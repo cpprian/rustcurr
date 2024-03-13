@@ -11,6 +11,7 @@ pub fn setup_app() -> Result<App, Error> {
     let user_data = cli::process_cli_data(writer)?;
     let app = App {
         user_data,
+        cache_file_path: config.cache_file_path,
         api_url: format!("https://v6.exchangerate-api.com/v6/{}", config.api_key),
     };
 

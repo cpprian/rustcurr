@@ -3,7 +3,7 @@ use std::collections::HashMap;
 use std::fmt::{self, Display, Formatter};
 
 /// Struct to hold the response from the ExchangeRate API
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ApiResponse {
     /// Result of the API call, should be "success" or "error"
     pub result: String,
