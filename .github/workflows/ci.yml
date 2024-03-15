@@ -38,6 +38,12 @@ jobs:
           run: |
             rustup component add rustfmt clippy
 
+        - name: Create .env file
+          id: env
+          shell: bash
+          run: |
+            echo "API_KEY=${{ secrets.API_KEY }}\nCACHE_FILE_PATH=cache.json" >> .env
+
         - name: Build
           id: build
           shell: bash
