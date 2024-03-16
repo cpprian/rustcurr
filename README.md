@@ -17,5 +17,14 @@ A command-line tool written in Rust to converts user amounts between different c
 3. Run `./rustcurr -i` to run the interactive mode
 4. Run `./rustcurr --help` to see the available commands
 
+### Run Docker 
+1. Run `docker build -t rustcurr .` in the root directory of the project
+2. Run `docker run -it --rm rustcurr` to run the binary
+3. In the container type `echo "API_KEY=your_api_key
+CACHE_FILE_PATH=/tmp/cache.json" > .env` to create .env file
+4. Run `cargo test` to run the tests
+5. Run `./target/release/rustcurr --help` to see the available commands
+6. As an alternative, you can uncomment the last lines in the Dockerfile to run directly app from /usr/local/bin
+
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
