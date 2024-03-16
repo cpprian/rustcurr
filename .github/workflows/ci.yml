@@ -11,9 +11,9 @@ jobs:
     strategy:
       matrix:
         os:
-            - windows-latest
-            - ubuntu-latest
-            - macos-latest
+          - windows-latest
+          - ubuntu-latest
+          - macos-latest
 
     runs-on: ${{ matrix.os }}
 
@@ -89,7 +89,7 @@ jobs:
             args: -- -D warnings
 
   push:
-    runs-on: linux
+    runs-on: ubuntu-latest
 
     steps:
         - name: Set up Docker Buildx
