@@ -88,6 +88,10 @@ jobs:
             command: clippy
             args: -- -D warnings
 
+  push:
+    runs-on: linux
+
+    steps:
         - name: Set up Docker Buildx
           uses: docker/setup-buildx-action@v3
 
